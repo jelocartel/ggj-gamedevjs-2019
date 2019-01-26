@@ -1,11 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
+
+@font-face {
+    font-family: 'Indie Flower'
+}
+
 .page {
     background-color: #4545ff;
 }
 
 h1 {
     text-align: center;
-    margin: 40px;
-    color: #457774;
+    /* margin: 40px; */
+    color: #d4163c;
+    position: absolute;
+    top: 25%;
+    left: 20%;
+    font-size: 66px;
+    font-family: 'Indie Flower';
 }
 
 button {
