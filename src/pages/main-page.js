@@ -8,22 +8,22 @@ const page2 = ( props ) => {
             <h1>Start Game</h1>
             <p>Choose numbers of players</p>
             <form>
-                <label>
+                <label className={numberOfPlayers === 1 ? "radio chosen" : "radio"}>
                     <input type="radio" name="playersNumber" value='1'
                         checked={numberOfPlayers === 1} onChange={props.playersNumber} />
                     1
                 </label>
-                <label>
+                <label className={numberOfPlayers === 2 ? "radio chosen" : "radio"}>
                     <input type="radio" name="playersNumber" value='2'
                         checked={numberOfPlayers === 2} onChange={props.playersNumber}/>
                     2
                 </label>
-                <label>
+                <label className={numberOfPlayers === 3 ? "radio chosen" : "radio"}>
                     <input type="radio" name="playersNumber" value='3'
                         checked={numberOfPlayers === 3} onChange={props.playersNumber}/>
                     3
                 </label>
-                <label>
+                <label className={numberOfPlayers === 4 ? "radio chosen" : "radio"}>
                     <input type="radio" name="playersNumber" value='4'
                         checked={numberOfPlayers === 4} onChange={props.playersNumber}/>
                     4
@@ -33,7 +33,7 @@ const page2 = ( props ) => {
                 {
                     props.players.map( (playerColor, index) => {
                         return (
-                            <div key={index}>
+                            <div key={index} className="car-label">
                                 <label>Car for player {index+1}:</label>
                                 <select
                                     value={playerColor}
