@@ -26,7 +26,7 @@ const page3 = ( props ) => {
             {props.players.map( (player, index) => {
                 return <Entity
                     key={index}
-                    gltf-model="#model-car1blue"
+                    gltf-model={`#model-car1${player}`}
                     keyboard-controls={{acceleration: 100, easing: 3, turnSpeed: Math.PI}}
                     position={{x: 0 + index*4, y: 0, z: 0}}
                     gamepad-controls={{controller: index, lookEnabled: false, debug: true}}/>;
