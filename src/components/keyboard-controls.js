@@ -1,6 +1,6 @@
 /* global AFRAME, THREE */
 
-var CLAMP_VELOCITY = 0.00001;
+var CLAMP_VELOCITY = 0.001;
 var MAX_DELTA = 0.2;
 var KEYS = [
   'w', 'a', 's', 'd',
@@ -112,21 +112,26 @@ AFRAME.registerComponent('keyboard-controls', {
 
     if (!data.enabled) { return; }
 
-    // Update velocity using keys pressed.
+    // Update velocity and rotation using keys pressed.
     acceleration = data.acceleration;
-    if (data.adEnabled) {
-      adSign = data.adInverted ? -1 : 1;
-        if (keys.a || keys.ArrowLeft) {
-            this.el.object3D.rotation.y += data.turnSpeed * delta;
-        }
-        if (keys.d || keys.ArrowRight) {
-            this.el.object3D.rotation.y -= data.turnSpeed * delta;
-        }
-    }
     if (data.wsEnabled) {
       wsSign = data.wsInverted ? -1 : 1;
       if (keys.w || keys.ArrowUp) { velocity[wsAxis] -= wsSign * acceleration * delta; }
       if (keys.s || keys.ArrowDown) { velocity[wsAxis] += wsSign * acceleration * delta; }
+    }
+
+    if (data.adEnabled) {
+        let maxVelocity = data.acceleration / data.easing;
+        // Scale velocity linearly to [0,1]. The slower the object moves, the
+        // slower it will turn.
+        let velFactor = Math.abs(velocity[wsAxis] / maxVelocity);
+        adSign = data.adInverted ? -1 : 1;
+        if (keys.a || keys.ArrowLeft) {
+            this.el.object3D.rotation.y += adSign * velFactor * data.turnSpeed * delta;
+        }
+        if (keys.d || keys.ArrowRight) {
+            this.el.object3D.rotation.y -= adSign * velFactor * data.turnSpeed * delta;
+        }
     }
   },
 
