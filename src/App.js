@@ -9,9 +9,9 @@ import "./App.css";
 class App extends Component {
 
     state = {
-        activePage: 1
+        activePage: 3
     }
-    
+
     nextPageHandler = (newActivePage) => {
         this.setState( { activePage: newActivePage } )
     }
