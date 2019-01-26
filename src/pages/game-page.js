@@ -7,6 +7,12 @@ import "../components/keyboard-controls";
 
 import './pages.css';
 
+const CAR1_DRIVING_MODEL = {
+    acceleration: 100,
+    easing: 3,
+    turnSpeed: Math.PI,
+};
+
 const page3 = ( props ) => {
     AFRAME.registerComponent('gamepad-controls', GamepadControls);
     return (
@@ -27,9 +33,9 @@ const page3 = ( props ) => {
                 return <Entity
                     key={index}
                     gltf-model={`#model-car1${player}`}
-                    keyboard-controls={{acceleration: 100, easing: 3, turnSpeed: Math.PI}}
+                    keyboard-controls={CAR1_DRIVING_MODEL}
                     position={{x: 0 + index*4, y: 0, z: 0}}
-                    gamepad-controls={{controller: index, lookEnabled: false, debug: true}}/>;
+                    gamepad-controls={{controller: index, lookEnabled: false, ...CAR1_DRIVING_MODEL}}/>;
             })}
         </Scene>
     )
