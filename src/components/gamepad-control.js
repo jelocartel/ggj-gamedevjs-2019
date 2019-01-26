@@ -129,11 +129,11 @@ module.exports = {
           inputX = dpad.x || this.getJoystick(0).x,
           inputY = dpad.y || this.getJoystick(0).y,
           pad = this.getGamepad(),
-          b7 = pad.buttons[7].pressed || 0,
-          b6 = pad.buttons[6].pressed || 0;
+          A = pad.buttons[GamepadButton.FACE_1].pressed || 0,
+          B = pad.buttons[GamepadButton.FACE_2].pressed || 0;
       if (Math.abs(inputX) > JOYSTICK_EPS) {
         // velocity[pitchAxis] += inputX * acceleration * dt / 1000;
-        let sign = b6 > b7 ? -1 : 1;
+        let sign = B > A ? -1 : 1;
         let maxVelocity = data.acceleration / data.easing;
         // Scale velocity linearly to [0,1]. The slower the object moves, the
         // slower it will turn.
@@ -143,11 +143,11 @@ module.exports = {
     //   if (Math.abs(inputY) > JOYSTICK_EPS) {
     //     velocity[rollAxis] += inputY * acceleration * dt / 1000;
     //   }
-      if(b7) {
-        velocity[rollAxis] -= b7 * acceleration * dt/100;
+      if(A) {
+        velocity[rollAxis] -= A * acceleration * dt/100;
       }
-      if(b6) {
-        velocity[rollAxis] += b6 * acceleration * dt/100;
+      if(B) {
+        velocity[rollAxis] += B * acceleration * dt/100;
       }
     }
 
@@ -233,7 +233,9 @@ module.exports = {
    */
   getGamepad: function () {
     var localGamepad = navigator.getGamepads
-          && navigator.getGamepads()[this.data.controller],
+          && Array.from(navigator.getGamepads())
+              .filter(Boolean)
+              .filter(({id}) => id.startsWith("Xbox"))[this.data.controller],
         proxyControls = this.el.sceneEl.components['proxy-controls'],
         proxyGamepad = proxyControls && proxyControls.isConnected()
           && proxyControls.getGamepad(this.data.controller);
