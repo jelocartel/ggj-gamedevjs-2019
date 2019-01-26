@@ -1,4 +1,4 @@
-/* global AFRAME, THREE */
+/* global THREE */
 var GamepadButton = Object.assign(function GamepadButton () {}, {
 	FACE_1: 0,
 	FACE_2: 1,
@@ -27,9 +27,8 @@ function GamepadButtonEvent (type, index, details) {
     this.value = details.value;
   }
 
-var MAX_DELTA = 200, // ms
-    PI_2 = Math.PI / 2;
-
+var MAX_DELTA = 0.2;
+var CLAMP_VELOCITY = 0.001;
 var JOYSTICK_EPS = 0.2;
 
 module.exports = {
@@ -54,7 +53,7 @@ module.exports = {
     lookEnabled:       { default: true },
     flyEnabled:        { default: false },
     invertAxisY:       { default: false },
-    turnSpeed: {default: Math.PI / 4},
+    turnSpeed:         {default: Math.PI / 4},
 
     // Constants
     easing:            { default: 20 },
@@ -93,7 +92,7 @@ module.exports = {
    * Called on each iteration of main render loop.
    */
   tick: function (time, delta) {
-    this.updatePosition(delta);
+      this.updatePosition(delta / 1000);
     this.updateButtonState();
   },
 
@@ -101,7 +100,7 @@ module.exports = {
    * Movement
    */
 
-  updatePosition: function (dt) {
+  updatePosition: function (delta) {
     var data = this.data;
     var acceleration = data.acceleration;
     var easing = data.easing;
@@ -113,45 +112,43 @@ module.exports = {
 
     // If data has changed or FPS is too low
     // we reset the velocity
-    if (dt > MAX_DELTA) {
+    if (delta > MAX_DELTA) {
       velocity[rollAxis] = 0;
       velocity[pitchAxis] = 0;
       return;
     }
 
-    velocity[rollAxis] -= velocity[rollAxis] * easing * dt / 1000;
-    velocity[pitchAxis] -= velocity[pitchAxis] * easing * dt / 1000;
+    // Decay and clamp velocity.
+    if (velocity[rollAxis] !== 0) {
+        velocity[rollAxis] -= velocity[rollAxis] * easing * delta;
+        if (Math.abs(velocity[rollAxis]) < CLAMP_VELOCITY) {
+            velocity[rollAxis] = 0; 
+        }
+    }
 
     var position = el.getAttribute('position');
 
     if (data.enabled && data.movementEnabled && gamepad) {
-      var dpad = this.getDpad(),
-          inputX = dpad.x || this.getJoystick(0).x,
-          inputY = dpad.y || this.getJoystick(0).y,
-          pad = this.getGamepad(),
-          b7 = pad.buttons[7].pressed || 0,
-          b6 = pad.buttons[6].pressed || 0;
-      if (Math.abs(inputX) > JOYSTICK_EPS) {
-        // velocity[pitchAxis] += inputX * acceleration * dt / 1000;
-        let sign = b6 > b7 ? -1 : 1;
-        let maxVelocity = data.acceleration / data.easing;
-        // Scale velocity linearly to [0,1]. The slower the object moves, the
-        // slower it will turn.
-        let velFactor = Math.abs(velocity[rollAxis] / maxVelocity);
-            this.el.object3D.rotation.y -= sign * inputX * velFactor * data.turnSpeed * dt/1000;
-      }
-    //   if (Math.abs(inputY) > JOYSTICK_EPS) {
-    //     velocity[rollAxis] += inputY * acceleration * dt / 1000;
-    //   }
-      if(b7) {
-        velocity[rollAxis] -= b7 * acceleration * dt/100;
-      }
-      if(b6) {
-        velocity[rollAxis] += b6 * acceleration * dt/100;
-      }
+        let dpad = this.getDpad();
+        let inputX = dpad.x || this.getJoystick(0).x;
+        //let inputY = dpad.y || this.getJoystick(0).y;
+        let pad = this.getGamepad();
+        let A = pad.buttons[GamepadButton.FACE_1].pressed || 0;
+        let B = pad.buttons[GamepadButton.FACE_2].pressed || 0;
+
+        velocity[rollAxis] -= A * acceleration * delta;
+        velocity[rollAxis] += B * acceleration * delta;
+
+        if (Math.abs(inputX) > JOYSTICK_EPS) {
+            let maxVelocity = data.acceleration / data.easing;
+            // Scale velocity linearly to [0,1]. The slower the object moves, the
+            // slower it will turn.
+            let velFactor = Math.abs(velocity[rollAxis] / maxVelocity);
+            this.el.object3D.rotation.y -= inputX * velFactor * data.turnSpeed * delta;
+        }
     }
 
-    var movementVector = this.getMovementVector(dt);
+    var movementVector = this.getMovementVector(delta);
 
     var currentPosition = el.getAttribute('position');
     position.x = currentPosition.x + movementVector.x;
@@ -170,7 +167,7 @@ module.exports = {
       var xRotation;
 
       directionVector.copy(velocity);
-      directionVector.multiplyScalar(delta / 1000);
+      directionVector.multiplyScalar(delta);
 
       // Absolute.
       if (!rotation) { return directionVector; }
@@ -233,7 +230,9 @@ module.exports = {
    */
   getGamepad: function () {
     var localGamepad = navigator.getGamepads
-          && navigator.getGamepads()[this.data.controller],
+          && Array.from(navigator.getGamepads())
+              .filter(Boolean)
+              .filter(({id}) => id[0].toLowerCase() === "x")[this.data.controller],
         proxyControls = this.el.sceneEl.components['proxy-controls'],
         proxyGamepad = proxyControls && proxyControls.isConnected()
           && proxyControls.getGamepad(this.data.controller);

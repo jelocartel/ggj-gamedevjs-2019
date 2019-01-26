@@ -9,6 +9,12 @@ import "../components/keyboard-controls";
 
 import './pages.css';
 
+const CAR1_DRIVING_MODEL = {
+    acceleration: 100,
+    easing: 3,
+    turnSpeed: Math.PI,
+};
+
 const page3 = ( props ) => {
     AFRAME.registerComponent('camera-movement', CameraMovement);
     AFRAME.registerComponent('gamepad-controls', GamepadControls);
@@ -22,25 +28,20 @@ const page3 = ( props ) => {
                 <a-asset-item id="model-map1" src="./map1.glb"></a-asset-item>
             </a-assets>
             <Camera camera-movement></Camera>
-            <Entity
-                gltf-model="#model-map1"
-                position={{x: 0, y: 0, z: 0}}/>
 
             {props.players.map( (player, index) => {
                 return index === 0 ?
                 <Entity
                     key={index}
                     gltf-model={`#model-car1${player}`}
-                    className="car"
-                    keyboard-controls={{acceleration: 100, easing: 3, turnSpeed: Math.PI}}
+                    keyboard-controls={CAR1_DRIVING_MODEL}
                     position={{x: 0 + index*4, y: 0, z: 0}}
-                    gamepad-controls={{controller: index, lookEnabled: false, debug: true}}/> :
+                    gamepad-controls={{controller: index, lookEnabled: false, ...CAR1_DRIVING_MODEL}}/> :
                     <Entity
                         key={index}
                         gltf-model={`#model-car1${player}`}
-                        className="car"
                         position={{ x: 0 + index * 4, y: 0, z: 0 }}
-                        gamepad-controls={{ controller: index, lookEnabled: false, debug: true }} />;
+                        gamepad-controls={{ controller: index, lookEnabled: false, ...CAR1_DRIVING_MODEL }} />;
             })}
         </Scene>
     )

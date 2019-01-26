@@ -6,12 +6,13 @@ import Page3 from './pages/game-page';
 
 import "./App.css";
 
+const PLAYER_COLORS = ["cyan", "magenta", "blue", "yellow"];
+
 class App extends Component {
 
     state = {
         activePage: 1,
-        numberOfPlayers: 1,
-        playersCars: []
+        playersCars: ["cyan"]
     }
 
     nextPageHandler = (newActivePage) => {
@@ -19,9 +20,9 @@ class App extends Component {
     }
 
     setNumberOfPlayersHandler = (evt) => {
+        let numberOfPlayers = parseInt(evt.target.value);
         this.setState( {
-            numberOfPlayers: parseInt(evt.target.value),
-            playersCars: new Array(parseInt(evt.target.value)).fill('cyan')
+            playersCars: PLAYER_COLORS.slice(0, numberOfPlayers)
         } );
     }
 
@@ -42,7 +43,7 @@ class App extends Component {
             content = <Page2
                         start={this.nextPageHandler.bind(this, 3)}
                         playersNumber={this.setNumberOfPlayersHandler}
-                        number={this.state.numberOfPlayers}
+                        players={this.state.playersCars}
                         setCar={this.setCarHandler}/>
         } else if (this.state.activePage === 3) {
             content = <Page3
