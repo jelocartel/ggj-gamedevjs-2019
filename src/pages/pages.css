@@ -56,6 +56,7 @@ form {
 .radio {
     margin: 5px 10px;
     position: relative;
+    display: inline-flex;
 }
 
 .radio:first-child:after {
