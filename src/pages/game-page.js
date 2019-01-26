@@ -2,8 +2,9 @@ import React from 'react';
 import AFRAME from "aframe";
 import {Scene, Entity} from "aframe-react";
 import { Camera } from "../entities/camera";
-import GamepadControls from "../components/gamepad-control";
+import "../components/gamepad-control";
 import "../components/keyboard-controls";
+import 'aframe-aabb-collider-component';
 
 import './pages.css';
 
@@ -13,8 +14,12 @@ const CAR1_DRIVING_MODEL = {
     turnSpeed: Math.PI,
 };
 
+const checkCollision = (evt) => {
+    console.log('collision, ', evt)
+    //evt.target is car !!
+}
+
 const page3 = ( props ) => {
-    AFRAME.registerComponent('gamepad-controls', GamepadControls);
     return (
         <Scene>
             <a-assets>
@@ -28,12 +33,20 @@ const page3 = ( props ) => {
                 
             {props.players.map( (player, index) => {
                 return <Entity
+                    aabb-collider="objects: .toCheckCollisions"
                     key={index}
                     gltf-model={`#model-car1${player}`}
                     keyboard-controls={CAR1_DRIVING_MODEL}
                     position={{x: 0 + index*4, y: 0, z: 0}}
-                    gamepad-controls={{controller: index, lookEnabled: false, ...CAR1_DRIVING_MODEL}}/>;
+                    gamepad-controls={{controller: index, lookEnabled: false, ...CAR1_DRIVING_MODEL}}
+                    events={{hitstart: checkCollision}} />;
             })}
+            <Entity 
+                class="toCheckCollisions"
+                geometry={{primitive: 'box'}} 
+                material={{color: 'red'}} 
+                position={{x: 0, y: 0, z: 0}}
+                />
         </Scene>
     )
 }
