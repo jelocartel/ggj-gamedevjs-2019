@@ -3,6 +3,7 @@ import AFRAME from "aframe";
 import {Scene, Entity} from "aframe-react";
 import { Camera } from "../entities/camera";
 import GamepadControls from "aframe-gamepad-controls";
+import "../components/keyboard-controls";
 
 import './pages.css';
 
@@ -16,6 +17,7 @@ const page3 = ( props ) => {
             <Camera></Camera>
             <Entity
                 gltf-model="#model-car1"
+                keyboard-controls={{acceleration: 400, turnSpeed: Math.PI / 2}}
                 position={{x: 0, y: 0, z: 0}}
                 gamepad-controls={{controller: 0, lookEnabled: false, debug: true}}/>
         </Scene>
