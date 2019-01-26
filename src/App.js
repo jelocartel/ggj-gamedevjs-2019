@@ -21,7 +21,7 @@ class App extends Component {
     setNumberOfPlayersHandler = (evt) => {
         this.setState( { 
             numberOfPlayers: parseInt(evt.target.value),
-            playersCars: []
+            playersCars: new Array(parseInt(evt.target.value)).fill('red')
         } );
     }
 
