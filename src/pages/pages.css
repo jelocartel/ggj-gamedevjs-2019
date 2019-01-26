@@ -13,6 +13,8 @@ button {
     background-color: #ee5588;
     color: #ffffff;
     display: block;
+    position: absolute;
+    z-index: 9;
 }
 
 button:hover {
