@@ -1,11 +1,13 @@
 import React from 'react';
-import "aframe";
+import AFRAME from "aframe";
 import {Scene, Entity} from "aframe-react";
 import { Camera } from "../entities/camera";
+import GamepadControls from "aframe-gamepad-controls";
 
 import './pages.css';
 
 const page3 = ( props ) => {
+    AFRAME.registerComponent('gamepad-controls', GamepadControls);
     return (
         <Scene>
             <a-assets>
@@ -14,7 +16,8 @@ const page3 = ( props ) => {
             <Camera></Camera>
             <Entity
                 gltf-model="#model-car1"
-                position={{x: 0, y: 0, z: 0}}/>
+                position={{x: 0, y: 0, z: 0}}
+                gamepad-controls={{controller: 0, lookEnabled: false, debug: true}}/>
         </Scene>
     )
 }
