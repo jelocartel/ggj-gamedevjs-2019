@@ -24,8 +24,16 @@ const page3 = ( props ) => {
                 keyboard-controls={{acceleration: 400, turnSpeed: Math.PI}}
                 position={{x: 0, y: 0, z: 0}}
                 gamepad-controls={{controller: 0, lookEnabled: false, debug: true}}/>
-        </Scene>
-    )
+                
+            {props.players.map( (player, index) => {
+                return (
+                    <Entity
+                        key={index}
+                        geometry={{primitive: "box"}}
+                        material={{color: player}}
+                        position={{x: 0, y: 0 + index*2, z: -5}}/>
+                )
+            })}
 }
 
 export default page3;
