@@ -21,13 +21,21 @@ h1 {
 
 button {
     margin: auto;
-    background-color: #ee5588;
+    background-color: #1ea241;
     color: #ffffff;
     display: block;
     position: absolute;
     z-index: 9;
+    bottom: 7%;
+    left: 40%;
+    width: 20%;
+    padding: 10px;
+    font-size: 24px;
+    line-height: 30px;
+    border: none;
+    border-radius: 9px;
 }
 
 button:hover {
-    background-color: #ee2266;
+    background-color: #038a03;
 }
