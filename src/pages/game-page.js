@@ -34,6 +34,8 @@ const page3 = ( props ) => {
                         position={{x: 0, y: 0 + index*2, z: -5}}/>
                 )
             })}
+        </Scene>
+    )
 }
 
 export default page3;
