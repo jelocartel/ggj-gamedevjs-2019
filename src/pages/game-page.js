@@ -2,7 +2,7 @@ import React from 'react';
 import AFRAME from "aframe";
 import {Scene, Entity} from "aframe-react";
 import { Camera } from "../entities/camera";
-import GamepadControls from "aframe-gamepad-controls";
+import GamepadControls from "../components/gamepad-control";
 import "../components/keyboard-controls";
 
 import './pages.css';
