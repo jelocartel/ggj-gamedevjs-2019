@@ -1,17 +1,32 @@
 import React, { Component } from "react";
-import "aframe";
-import {Scene, Entity} from "aframe-react";
+
+import Page1 from './pages/welcome-page';
+import Page2 from './pages/main-page';
+import Page3 from './pages/game-page';
 
 import "./App.css";
 
 class App extends Component {
+
+    state = {
+        activePage: 1
+    }
+    
+    nextPageHandler = (newActivePage) => {
+        this.setState( { activePage: newActivePage } )
+    }
+
     render() {
-        return <Scene>
-            <Entity
-                geometry={{primitive: "box"}}
-                material={{color: "red"}}
-                position={{x: 0, y: 0, z: -5}}/>
-        </Scene>;
+        let content;
+
+        if(this.state.activePage === 1) {
+            content = <Page1 click={this.nextPageHandler.bind(this, 2)}/>
+        } else if (this.state.activePage === 2) {
+            content = <Page2 click={this.nextPageHandler.bind(this, 3)}/>
+        } else if (this.state.activePage === 3) {
+            content = <Page3/>
+        }
+        return content
     }
 }
 

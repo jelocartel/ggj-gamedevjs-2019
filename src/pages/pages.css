@@ -1,0 +1,20 @@
+.page {
+    background-color: #4545ff;
+}
+
+h1 {
+    text-align: center;
+    margin: 40px;
+    color: #457774;
+}
+
+button {
+    margin: auto;
+    background-color: #ee5588;
+    color: #ffffff;
+    display: block;
+}
+
+button:hover {
+    background-color: #ee2266;
+}
