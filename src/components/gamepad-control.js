@@ -128,8 +128,9 @@ module.exports = {
       var dpad = this.getDpad(),
           inputX = dpad.x || this.getJoystick(0).x,
           inputY = dpad.y || this.getJoystick(0).y,
-          b7 = this.getGamepad().buttons[7].pressed,
-          b6 = this.getGamepad().buttons[6].pressed;
+          pad = this.getGamepad(),
+          b7 = pad.buttons[7].pressed || 0,
+          b6 = pad.buttons[6].pressed || 0;
       if (Math.abs(inputX) > JOYSTICK_EPS) {
         // velocity[pitchAxis] += inputX * acceleration * dt / 1000;
         let sign = b6 > b7 ? -1 : 1;
