@@ -1,10 +1,4 @@
-/**
- * Gamepad controls for A-Frame.
- *
- * For more information about the Gamepad API, see:
- * https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
- */
-
+/* global AFRAME, THREE */
 var GamepadButton = Object.assign(function GamepadButton () {}, {
 	FACE_1: 0,
 	FACE_2: 1,
@@ -81,15 +75,8 @@ module.exports = {
    * Called once when component is attached. Generally for initial setup.
    */
   init: function () {
-    // Movement
-    this.velocity = new THREE.Vector3(0, 0, 0);
-    this.direction = new THREE.Vector3(0, 0, 0);
-
-    // Rotation
-    this.pitch = new THREE.Object3D();
-    this.yaw = new THREE.Object3D();
-    this.yaw.position.y = 10;
-    this.yaw.add(this.pitch);
+    this.position = {};
+    this.velocity = new THREE.Vector3();
 
     // Button state
     this.buttons = {};
@@ -105,9 +92,8 @@ module.exports = {
   /**
    * Called on each iteration of main render loop.
    */
-  tick: function (t, dt) {
-    this.updateRotation(dt);
-    this.updatePosition(dt);
+  tick: function (time, delta) {
+    this.updatePosition(delta);
     this.updateButtonState();
   },
 
@@ -141,126 +127,62 @@ module.exports = {
     if (data.enabled && data.movementEnabled && gamepad) {
       var dpad = this.getDpad(),
           inputX = dpad.x || this.getJoystick(0).x,
-          inputY = dpad.y || this.getJoystick(0).y;
+          inputY = dpad.y || this.getJoystick(0).y,
+          b7 = this.getGamepad().buttons[7].pressed,
+          b6 = this.getGamepad().buttons[6].pressed;
       if (Math.abs(inputX) > JOYSTICK_EPS) {
-        velocity[pitchAxis] += inputX * acceleration * dt / 1000;
+        // velocity[pitchAxis] += inputX * acceleration * dt / 1000;
+        let sign = b6 > b7 ? -1 : 1;
+        let maxVelocity = data.acceleration / data.easing;
+        // Scale velocity linearly to [0,1]. The slower the object moves, the
+        // slower it will turn.
+        let velFactor = Math.abs(velocity[rollAxis] / maxVelocity);
+            this.el.object3D.rotation.y -= sign * inputX * velFactor * data.turnSpeed * dt/1000;
       }
-      if (Math.abs(inputY) > JOYSTICK_EPS) {
-        velocity[rollAxis] += inputY * acceleration * dt / 1000;
+    //   if (Math.abs(inputY) > JOYSTICK_EPS) {
+    //     velocity[rollAxis] += inputY * acceleration * dt / 1000;
+    //   }
+      if(b7) {
+        velocity[rollAxis] -= b7 * acceleration * dt/100;
+      }
+      if(b6) {
+        velocity[rollAxis] += b6 * acceleration * dt/100;
       }
     }
 
     var movementVector = this.getMovementVector(dt);
 
-    el.object3D.translateX(movementVector.x);
-    el.object3D.translateY(movementVector.y);
-    el.object3D.translateZ(movementVector.z);
-
-    el.setAttribute('position', {
-      x: position.x + movementVector.x,
-      y: position.y + movementVector.y,
-      z: position.z + movementVector.z
-    });
+    var currentPosition = el.getAttribute('position');
+    position.x = currentPosition.x + movementVector.x;
+    position.y = currentPosition.y + movementVector.y;
+    position.z = currentPosition.z + movementVector.z;
+    el.setAttribute('position', position);
   },
 
-  getMovementVector: function (dt) {
-    if (this._getMovementVector) {
-      return this._getMovementVector(dt);
+  getMovementVector: (function () {
+    var directionVector = new THREE.Vector3(0, 0, 0);
+    var rotationEuler = new THREE.Euler(0, 0, 0, 'YXZ');
+
+    return function (delta) {
+      var rotation = this.el.getAttribute('rotation');
+      var velocity = this.velocity;
+      var xRotation;
+
+      directionVector.copy(velocity);
+      directionVector.multiplyScalar(delta / 1000);
+
+      // Absolute.
+      if (!rotation) { return directionVector; }
+
+      xRotation = this.data.fly ? rotation.x : 0;
+
+      // Transform direction relative to heading.
+      rotationEuler.set(THREE.Math.degToRad(xRotation), THREE.Math.degToRad(rotation.y), 0);
+      directionVector.applyEuler(rotationEuler);
+      return directionVector;
     }
+    })(),
 
-    var euler = new THREE.Euler(0, 0, 0, 'YXZ'),
-        rotation = new THREE.Vector3();
-
-    this._getMovementVector = function (dt) {
-      rotation.copy(this.el.getAttribute('rotation'));
-      this.direction.copy(this.velocity);
-      this.direction.multiplyScalar(dt / 1000);
-      if (!rotation) { return this.direction; }
-      if (!this.data.flyEnabled) { rotation.x = 0; }
-      euler.set(
-        THREE.Math.degToRad(rotation.x),
-        THREE.Math.degToRad(rotation.y),
-        0
-      );
-      this.direction.applyEuler(euler);
-      return this.direction;
-    };
-
-    return this._getMovementVector(dt);
-  },
-
-  /*******************************************************************
-   * Rotation
-   */
-
-  updateRotation: function () {
-    if (this._updateRotation) {
-      return this._updateRotation();
-    }
-
-    var initialRotation = new THREE.Vector3(),
-        prevInitialRotation = new THREE.Vector3(),
-        prevFinalRotation = new THREE.Vector3();
-
-    var tCurrent,
-        tLastLocalActivity = 0,
-        tLastExternalActivity = 0;
-
-    var ROTATION_EPS = 0.0001,
-        DEBOUNCE = 500;
-
-    this._updateRotation = function () {
-      if (!this.data.lookEnabled || !this.getGamepad()) {
-        return;
-      }
-
-      tCurrent = Date.now();
-      initialRotation.copy(this.el.getAttribute('rotation') || initialRotation);
-
-      // If initial rotation for this frame is different from last frame, and
-      // doesn't match last gamepad state, assume an external component is
-      // active on this element.
-      if (initialRotation.distanceToSquared(prevInitialRotation) > ROTATION_EPS
-          && initialRotation.distanceToSquared(prevFinalRotation) > ROTATION_EPS) {
-        prevInitialRotation.copy(initialRotation);
-        tLastExternalActivity = tCurrent;
-        return;
-      }
-
-      prevInitialRotation.copy(initialRotation);
-
-      // If external controls have been active in last 500ms, wait.
-      if (tCurrent - tLastExternalActivity < DEBOUNCE) {
-        return;
-      }
-
-      var lookVector = this.getJoystick(1);
-      if (Math.abs(lookVector.x) <= JOYSTICK_EPS) lookVector.x = 0;
-      if (Math.abs(lookVector.y) <= JOYSTICK_EPS) lookVector.y = 0;
-      if (this.data.invertAxisY) lookVector.y = -lookVector.y;
-
-      // If external controls have been active more recently than gamepad,
-      // and gamepad hasn't moved, don't overwrite the existing rotation.
-      if (tLastExternalActivity > tLastLocalActivity && !lookVector.lengthSq()) {
-        return;
-      }
-
-      lookVector.multiplyScalar(this.data.sensitivity);
-      this.yaw.rotation.y -= lookVector.x;
-      this.pitch.rotation.x -= lookVector.y;
-      this.pitch.rotation.x = Math.max(-PI_2, Math.min(PI_2, this.pitch.rotation.x));
-
-      this.el.setAttribute('rotation', {
-        x: THREE.Math.radToDeg(this.pitch.rotation.x),
-        y: THREE.Math.radToDeg(this.yaw.rotation.y),
-        z: 0
-      });
-      prevFinalRotation.copy(this.el.getAttribute('rotation'));
-      tLastLocalActivity = tCurrent;
-    };
-
-    return this._updateRotation();
-  },
 
   /*******************************************************************
    * Button events
