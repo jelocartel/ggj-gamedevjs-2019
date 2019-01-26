@@ -1,15 +1,13 @@
 import React from 'react';
 import "aframe";
-import { Scene, Entity } from "aframe-react";
+import {Entity} from "aframe-react";
 
 const Camera = (props) => {
     return (
-        <Entity rotation={{ x: -90, y: -90, z: 0 }} position={{ x: 0, y: 20, z: 0 }}>
-            <Entity camera="active: true" data-aframe-default-camera>
-            </Entity>
+        <Entity rotation={{ x: -30, y: 45, z: 0 }} position={{ x: 10, y: 10, z: 10 }}>
+            <Entity camera="active: true" data-aframe-default-camera></Entity>
         </Entity>
-
-    )
+    );
 }
 
 export {
