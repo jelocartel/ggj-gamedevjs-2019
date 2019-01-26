@@ -21,7 +21,7 @@ const page3 = ( props ) => {
                 position={{x: 0, y: 0, z: 0}}/>
             <Entity
                 gltf-model="#model-car1"
-                keyboard-controls={{acceleration: 400, turnSpeed: Math.PI}}
+                keyboard-controls={{acceleration: 100, easing: 3, turnSpeed: Math.PI}}
                 position={{x: 0, y: 0, z: 0}}
                 gamepad-controls={{controller: 0, lookEnabled: false, debug: true}}/>
                 
