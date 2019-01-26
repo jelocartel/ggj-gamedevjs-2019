@@ -1,6 +1,7 @@
 import React from 'react';
 import "aframe";
 import {Scene, Entity} from "aframe-react";
+import { Camera } from "../entities/camera";
 
 import './pages.css';
 
@@ -10,10 +11,10 @@ const page3 = ( props ) => {
             <a-assets>
                 <a-asset-item id="model-car1" src="./car1.glb"></a-asset-item>
             </a-assets>
-
+            <Camera></Camera>
             <Entity
                 gltf-model="#model-car1"
-                position={{x: 0, y: 0, z: -5}}/>
+                position={{x: 0, y: 0, z: 0}}/>
         </Scene>
     )
 }
