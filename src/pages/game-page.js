@@ -25,9 +25,6 @@ const page3 = ( props ) => {
                 <a-asset-item id="model-map1" src="./map1.glb"></a-asset-item>
             </a-assets>
             <Camera></Camera>
-            <Entity
-                gltf-model="#model-map1"
-                position={{x: 0, y: 0, z: 0}}/>
                 
             {props.players.map( (player, index) => {
                 return <Entity
