@@ -8,7 +8,7 @@ const page2 = ( props ) => {
             <p>Choose numbers of players</p>
             <form>
                 <label>
-                    <input type="radio" name="playersNumber" value='1' onChange={props.playersNumber} />
+                    <input type="radio" name="playersNumber" value='1' checked='checked' onChange={props.playersNumber} />
                     1
                 </label>
                 <label>
@@ -31,8 +31,7 @@ const page2 = ( props ) => {
                             <div key={index}>
                                 <label>Car for player {index+1}:</label>
                                 <select onChange={(evt) => props.setCar(index, evt)}>
-                                    <option value=''></option>
-                                    <option value='cyan'>cyan</option>
+                                    <option value='cyan' selected='selected'>cyan</option>
                                     <option value='magenta'>magenta</option>
                                     <option value='blue'>blue</option>
                                     <option value='yellow'>yellow</option>
