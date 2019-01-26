@@ -19,19 +19,25 @@ const page3 = ( props ) => {
             <Entity
                 gltf-model="#model-map1"
                 position={{x: 0, y: 0, z: 0}}/>
-            <Entity
+            {/* <Entity
                 gltf-model="#model-car1"
                 keyboard-controls={{acceleration: 100, easing: 3, turnSpeed: Math.PI}}
                 position={{x: 0, y: 0, z: 0}}
-                gamepad-controls={{controller: 0, lookEnabled: false, debug: true}}/>
+                gamepad-controls={{controller: 0, lookEnabled: false, debug: true}}/> */}
                 
             {props.players.map( (player, index) => {
                 return (
+                    // <Entity
+                    //     key={index}
+                    //     geometry={{primitive: "box"}}
+                    //     material={{color: player}}
+                    //     position={{x: 0, y: 0 + index*2, z: -5}}/>
                     <Entity
                         key={index}
-                        geometry={{primitive: "box"}}
-                        material={{color: player}}
-                        position={{x: 0, y: 0 + index*2, z: -5}}/>
+                        gltf-model="#model-car1"
+                        keyboard-controls={{acceleration: 100, easing: 3, turnSpeed: Math.PI}}
+                        position={{x: 0 + index*4, y: 0, z: 0}}
+                        gamepad-controls={{controller: index, lookEnabled: false, debug: true}}/>
                 )
             })}
         </Scene>
