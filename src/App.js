@@ -19,7 +19,7 @@ class App extends Component {
     }
 
     setNumberOfPlayersHandler = (evt) => {
-        this.setState( { 
+        this.setState( {
             numberOfPlayers: parseInt(evt.target.value),
             playersCars: new Array(parseInt(evt.target.value)).fill('cyan')
         } );
@@ -39,7 +39,7 @@ class App extends Component {
         if(this.state.activePage === 1) {
             content = <Page1 click={this.nextPageHandler.bind(this, 2)}/>
         } else if (this.state.activePage === 2) {
-            content = <Page2 
+            content = <Page2
                         start={this.nextPageHandler.bind(this, 3)}
                         playersNumber={this.setNumberOfPlayersHandler}
                         number={this.state.numberOfPlayers}
