@@ -12,7 +12,10 @@ const page3 = ( props ) => {
     return (
         <Scene>
             <a-assets>
-                <a-asset-item id="model-car1" src="./car1.glb"></a-asset-item>
+                <a-asset-item id="model-car1blue" src="./car1blue.glb"></a-asset-item>
+                <a-asset-item id="model-car1cyan" src="./car1cyan.glb"></a-asset-item>
+                <a-asset-item id="model-car1magenta" src="./car1magenta.glb"></a-asset-item>
+                <a-asset-item id="model-car1yellow" src="./car1yellow.glb"></a-asset-item>
                 <a-asset-item id="model-map1" src="./map1.glb"></a-asset-item>
             </a-assets>
             <Camera></Camera>
@@ -20,9 +23,9 @@ const page3 = ( props ) => {
                 gltf-model="#model-map1"
                 position={{x: 0, y: 0, z: 0}}/>
             <Entity
-                gltf-model="#model-car1"
-                keyboard-controls={{acceleration: 100, easing: 3, turnSpeed: Math.PI}}
+                gltf-model="#model-car1blue"
                 position={{x: 0, y: 0, z: 0}}
+                keyboard-controls={{acceleration: 100, easing: 3, turnSpeed: Math.PI}}
                 gamepad-controls={{controller: 0, lookEnabled: false, debug: true}}/>
                 
             {props.players.map( (player, index) => {
