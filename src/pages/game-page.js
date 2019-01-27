@@ -32,7 +32,7 @@ const page3 = ( props ) => {
                 <a-asset-item id="model-car1yellow" src="./car1yellow.glb"></a-asset-item>
                 <a-asset-item id="model-map1" src="./map1.glb"></a-asset-item>
             </a-assets>
-            <Camera camera-movement></Camera>
+            <Camera></Camera>
 
             {props.players.map( (player, index) => {
                 return <Entity
