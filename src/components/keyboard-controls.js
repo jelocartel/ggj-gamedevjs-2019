@@ -1,4 +1,4 @@
-/* global AFRAME, THREE */
+/* global AFRAME, CANNON, THREE */
 
 import {scale} from "../util";
 
@@ -118,8 +118,19 @@ AFRAME.registerComponent('keyboard-controls', {
     acceleration = data.acceleration;
     if (data.wsEnabled) {
       wsSign = data.wsInverted ? -1 : 1;
-      if (keys.w || keys.ArrowUp) { velocity[wsAxis] -= wsSign * acceleration * delta; }
-      if (keys.s || keys.ArrowDown) { velocity[wsAxis] += wsSign * acceleration * delta; }
+        if (keys.w || keys.ArrowUp) {
+            //velocity[wsAxis] -= wsSign * acceleration * delta;
+            this.el.body.applyLocalImpulse(
+                new CANNON.Vec3(0, 0, -5),
+                new CANNON.Vec3(0, 0, -10));
+
+        }
+        if (keys.s || keys.ArrowDown) {
+            //velocity[wsAxis] += wsSign * acceleration * delta;
+            this.el.body.applyLocalImpulse(
+                new CANNON.Vec3(0, 0, 5),
+                new CANNON.Vec3(0, 0, -10));
+        }
     }
 
     if (data.adEnabled) {
@@ -129,10 +140,16 @@ AFRAME.registerComponent('keyboard-controls', {
         if (velFactor > 1.16) velFactor = 0;
         adSign = data.adInverted ? -1 : 1;
         if (keys.a || keys.ArrowLeft) {
-            this.el.object3D.rotation.y += adSign * velFactor * data.turnSpeed * delta;
+            //this.el.object3D.rotation.y += adSign * velFactor * data.turnSpeed * delta;
+            this.el.body.applyLocalImpulse(
+                new CANNON.Vec3(-0.4, 0, 0),
+                new CANNON.Vec3(0, 0, -10));
         }
         if (keys.d || keys.ArrowRight) {
-            this.el.object3D.rotation.y -= adSign * velFactor * data.turnSpeed * delta;
+            //this.el.object3D.rotation.y -= adSign * velFactor * data.turnSpeed * delta;
+            this.el.body.applyLocalImpulse(
+                new CANNON.Vec3(0.4, 0, 0),
+                new CANNON.Vec3(0, 0, -10));
         }
     }
   },

@@ -10,7 +10,7 @@ AFRAME.registerComponent('car-audio', {
         
     },
     tick: function (time, timeDelta) {
-        let vel = Math.abs(this.el.getAttribute('velocity'));
+        let vel = Math.abs(this.el.getAttribute('forward'));
         if (vel > 0.3) {
             this.mySound.play();
             this.mySound.volume = 3*vel / 100;

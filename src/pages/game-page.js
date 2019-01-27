@@ -27,13 +27,6 @@ const page3 = ( props ) => {
             {props.players.map( (player, index) =>
                 <Car1 key={index} index={index} player={player}/>
             )}
-
-            <Entity
-                class="toCheckCollisions"
-                geometry={{primitive: 'box'}}
-                material={{color: 'red'}}
-                position={{x: 0, y: 0, z: 0}}
-                />
         </Scene>
     )
 }

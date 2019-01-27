@@ -1,4 +1,4 @@
-/* global THREE */
+/* global CANNON, THREE */
 
 import {scale} from "../util";
 
@@ -170,7 +170,7 @@ AFRAME.registerComponent('gamepad-controls',
       var rotation = this.el.getAttribute('rotation');
       var velocity = this.velocity;
       var xRotation;
-      this.el.setAttribute('velocity',this.velocity[this.data.rollAxis]);
+      this.el.setAttribute('forward',this.velocity[this.data.rollAxis]);
 
       directionVector.copy(velocity);
       directionVector.multiplyScalar(delta);

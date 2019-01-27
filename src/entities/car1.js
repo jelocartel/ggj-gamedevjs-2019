@@ -1,5 +1,6 @@
 import React from 'react';
 import "aframe";
+import 'aframe-physics-system';
 import {Entity} from "aframe-react";
 
 import "../components/gamepad-control";
@@ -20,8 +21,15 @@ const checkCollision = (evt) => {
 export default
 function Car1({index, player}) {
     return <Entity
+        id={`car${index}`}
         class="car"
         aabb-collider="objects: .toCheckCollisions"
+        dynamic-body={{
+            shape: "box",
+            mass: 5,
+            linearDamping: 0.1,
+            angularDamping: 0.1,
+        }}
         key={index}
         gltf-model={`#model-car1${player}`}
         keyboard-controls={CAR1_DRIVING_MODEL}
