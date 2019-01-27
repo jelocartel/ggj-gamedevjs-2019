@@ -31,7 +31,9 @@ var MAX_DELTA = 0.2;
 var CLAMP_VELOCITY = 0.001;
 var JOYSTICK_EPS = 0.2;
 
-module.exports = {
+/* globals AFRAME */
+AFRAME.registerComponent('gamepad-controls', 
+ {
 
   /*******************************************************************
    * Statics
@@ -307,4 +309,5 @@ module.exports = {
   getID: function () {
     return this.getGamepad().id;
   }
-};
+});
+
