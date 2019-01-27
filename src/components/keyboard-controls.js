@@ -1,5 +1,7 @@
 /* global AFRAME, THREE */
 
+import {scale} from "../util";
+
 var CLAMP_VELOCITY = 0.001;
 var MAX_DELTA = 0.2;
 var KEYS = [
@@ -121,10 +123,10 @@ AFRAME.registerComponent('keyboard-controls', {
     }
 
     if (data.adEnabled) {
+        let vel = Math.abs(velocity[wsAxis]);
         let maxVelocity = data.acceleration / data.easing;
-        // Scale velocity linearly to [0,1]. The slower the object moves, the
-        // slower it will turn.
-        let velFactor = Math.abs(velocity[wsAxis] / maxVelocity);
+        let velFactor = scale(vel, 0, maxVelocity, 1.2, 0.9);
+        if (velFactor > 1.1) velFactor = 0;
         adSign = data.adInverted ? -1 : 1;
         if (keys.a || keys.ArrowLeft) {
             this.el.object3D.rotation.y += adSign * velFactor * data.turnSpeed * delta;
