@@ -126,7 +126,7 @@ AFRAME.registerComponent('keyboard-controls', {
         let vel = Math.abs(velocity[wsAxis]);
         let maxVelocity = data.acceleration / data.easing;
         let velFactor = scale(vel, 0, maxVelocity, 1.2, 0.9);
-        if (velFactor > 1.1) velFactor = 0;
+        if (velFactor > 1.16) velFactor = 0;
         adSign = data.adInverted ? -1 : 1;
         if (keys.a || keys.ArrowLeft) {
             this.el.object3D.rotation.y += adSign * velFactor * data.turnSpeed * delta;
