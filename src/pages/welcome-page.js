@@ -7,7 +7,7 @@ import './pages.css';
 const page1 = ( props ) => {
     return (
         <div>
-            <h1>Welcome to Jelonki!</h1>
+            <h1>Samochodziki i małe robociki</h1>
             <Scene>
                 <a-assets>
                     <a-asset-item id="model-car1blue" src="./car1blue.glb"></a-asset-item>
