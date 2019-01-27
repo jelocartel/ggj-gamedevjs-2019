@@ -64,6 +64,7 @@ AFRAME.registerComponent('keyboard-controls', {
     position.y = currentPosition.y + movementVector.y;
     position.z = currentPosition.z + movementVector.z;
     el.setAttribute('position', position);
+
   },
 
   remove: function () {

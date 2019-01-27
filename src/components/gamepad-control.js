@@ -150,6 +150,14 @@ AFRAME.registerComponent('gamepad-controls',
             let velFactor = scale(vel, 0, maxVelocity, 1.2, 0.9);
             if (velFactor > 1.16) velFactor = 0;
             this.el.object3D.rotation.y -= inputX * velFactor * data.turnSpeed * delta;
+
+      if (this.el.body) {
+          this.el.body.quaternion.setFromEuler(
+              this.el.object3D.rotation.x,
+              this.el.object3D.rotation.y,
+              this.el.object3D.rotation.z
+          );
+      }
         }
     }
 
@@ -160,6 +168,14 @@ AFRAME.registerComponent('gamepad-controls',
     position.y = currentPosition.y + movementVector.y;
     position.z = currentPosition.z + movementVector.z;
     el.setAttribute('position', position);
+
+      if (this.el.body) {
+          this.el.body.position.set(
+              this.el.body.position.x + movementVector.x,
+              this.el.body.position.y + movementVector.y,
+              this.el.body.position.z + movementVector.z,
+          );
+      }
   },
 
   getMovementVector: (function () {

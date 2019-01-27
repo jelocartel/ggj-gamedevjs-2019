@@ -7,18 +7,20 @@ import Map1 from "../entities/map1";
 
 import CameraMovement from '../components/camera-movement';
 import 'aframe-aabb-collider-component';
+import 'aframe-physics-system';
 
 import './pages.css';
 
 const page3 = ( props ) => {
     AFRAME.registerComponent('camera-movement', CameraMovement);
     return (
-        <Scene>
+        <Scene physics="debug: true; friction: 0.1">
             <a-assets>
                 <a-asset-item id="model-car1blue" src="./car1blue.glb"></a-asset-item>
                 <a-asset-item id="model-car1cyan" src="./car1cyan.glb"></a-asset-item>
                 <a-asset-item id="model-car1magenta" src="./car1magenta.glb"></a-asset-item>
                 <a-asset-item id="model-car1yellow" src="./car1yellow.glb"></a-asset-item>
+                <a-asset-item id="model-pencil" src="./pencil.glb"></a-asset-item>
             </a-assets>
             <Camera></Camera>
 
