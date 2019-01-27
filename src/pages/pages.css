@@ -6,6 +6,10 @@
 
 .page {
     background-color: #4545ff;
+    margin-top: 30%;
+    text-align: center;
+    padding: 20px 0 2px 0;
+    color: #fff;
 }
 
 h1 {
@@ -13,10 +17,11 @@ h1 {
     /* margin: 40px; */
     color: #d4163c;
     position: absolute;
-    top: 25%;
-    left: 20%;
+    top: 22%;
+    /* left: 20%; */
     font-size: 66px;
     font-family: 'Indie Flower';
+    width: 100%;
 }
 
 button {
@@ -38,4 +43,87 @@ button {
 
 button:hover {
     background-color: #038a03;
+}
+
+p {
+    font-size: 18px;
+}
+
+form {
+    margin: 15px 0 30px;
+}
+
+.radio {
+    margin: 5px 10px;
+    position: relative;
+    display: inline-flex;
+}
+
+.radio:first-child:after {
+    display: block;
+    position: absolute;
+    width: 40px;
+    content: '1';
+    line-height: 40px;
+    background-color: rgba(0, 0, 0, 1);
+    height: 40px;
+    border: solid 2px #333;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+.radio:nth-child(2):after {
+    display: block;
+    position: absolute;
+    width: 40px;
+    content: '2';
+    line-height: 40px;
+    background-color: rgba(0, 0, 0, 1);
+    height: 40px;
+    border: solid 2px #333;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+.radio:nth-child(3):after {
+    display: block;
+    position: absolute;
+    width: 40px;
+    content: '3';
+    line-height: 40px;
+    background-color: rgba(0, 0, 0, 1);
+    height: 40px;
+    border: solid 2px #333;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+.radio:nth-child(4):after {
+    display: block;
+    position: absolute;
+    width: 40px;
+    content: '4';
+    line-height: 40px;
+    background-color: rgba(0, 0, 0, 1);
+    height: 40px;
+    border: solid 2px #333;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+.radio.chosen:after{
+    background-color: red;
+}
+
+.car-label {
+    margin: 10px;
+}
+
+.car-label label {
+    margin-right: 15px;
+}
+
+.car-label select {
+    padding: 3px;
+    border-radius: 3px;
 }
