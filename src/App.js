@@ -12,8 +12,10 @@ class App extends Component {
 
     state = {
         activePage: 1,
-        playersCars: ["cyan"]
+        playersCars: ["cyan"],
+        results: []
     }
+    myRef = React.createRef();
 
     nextPageHandler = (newActivePage) => {
         this.setState( { activePage: newActivePage } );
@@ -28,28 +30,54 @@ class App extends Component {
 
     setCarHandler = (idx, evt) => {
         let arr = this.state.playersCars;
-        // arr.push(evt.target.value);
         arr[idx] = evt.target.value;
         this.setState( { playersCars: arr });
-        console.log('players cars = ', this.state.playersCars)
+    }
+
+    setResults = (arr) => {
+        
+        let res = arr.map((points, index) => {
+            return {
+                number: index,
+                points: points
+            }
+        });
+        res = res.sort( (a, b) => parseInt(b.points) - parseInt(a.points));
+        let highscore = this.myRef.current;
+
+        highscore.childNodes.forEach( (p, index) => {
+            p.innerHTML = `player ${res[index].number} : ${res[index].points}`;
+        });
     }
 
     render() {
         let content;
 
         if(this.state.activePage === 1) {
-            content = <Page1 click={this.nextPageHandler.bind(this, 2)}/>
+            return <Page1 click={this.nextPageHandler.bind(this, 2)}/>
         } else if (this.state.activePage === 2) {
-            content = <Page2
+            return <Page2
                         start={this.nextPageHandler.bind(this, 3)}
                         playersNumber={this.setNumberOfPlayersHandler}
                         players={this.state.playersCars}
                         setCar={this.setCarHandler}/>
         } else if (this.state.activePage === 3) {
-            content = <Page3
-                        players={this.state.playersCars}/>
+            return (
+                <div>
+                    <div ref={this.myRef} class="highscore">
+                        {new Array(this.state.playersCars.length).fill('1').map( (el, index) => {
+                            return (
+                                <p key={index}>player {index}</p>
+                            )
+                        })}
+                    </div>
+                    <Page3
+                        players={this.state.playersCars}
+                        setResults={this.setResults}/>
+                </div>
+            )
         }
-        return content
+        
     }
 }
 
