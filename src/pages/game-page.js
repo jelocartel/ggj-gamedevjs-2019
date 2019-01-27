@@ -2,10 +2,10 @@ import React from 'react';
 import AFRAME from "aframe";
 import {Scene, Entity} from "aframe-react";
 import { Camera } from "../entities/camera";
-import GamepadControls from "../components/gamepad-control";
 import CameraMovement from '../components/camera-movement';
-
+import "../components/gamepad-control";
 import "../components/keyboard-controls";
+import 'aframe-aabb-collider-component';
 
 import './pages.css';
 
@@ -15,9 +15,13 @@ const CAR1_DRIVING_MODEL = {
     turnSpeed: Math.PI,
 };
 
+const checkCollision = (evt) => {
+    console.log('collision, ', evt)
+    //evt.target is car !!
+}
+
 const page3 = ( props ) => {
     AFRAME.registerComponent('camera-movement', CameraMovement);
-    AFRAME.registerComponent('gamepad-controls', GamepadControls);
     return (
         <Scene>
             <a-assets>
@@ -30,21 +34,23 @@ const page3 = ( props ) => {
             <Camera camera-movement></Camera>
 
             {props.players.map( (player, index) => {
-                return index === 0 ?
-                <Entity
+                return <Entity
                     class="car"
+                    aabb-collider="objects: .toCheckCollisions"
                     key={index}
                     gltf-model={`#model-car1${player}`}
                     keyboard-controls={CAR1_DRIVING_MODEL}
                     position={{x: 0 + index*4, y: 0, z: 0}}
-                    gamepad-controls={{controller: index, lookEnabled: false, ...CAR1_DRIVING_MODEL}}/> :
-                    <Entity
-                        class="car"
-                        key={index}
-                        gltf-model={`#model-car1${player}`}
-                        position={{ x: 0 + index * 4, y: 0, z: 0 }}
-                        gamepad-controls={{ controller: index, lookEnabled: false, ...CAR1_DRIVING_MODEL }} />;
+                    events={{ hitstart: checkCollision }}
+                    gamepad-controls={{controller: index, lookEnabled: false, ...CAR1_DRIVING_MODEL}}/>
             })}
+
+            <Entity
+                class="toCheckCollisions"
+                geometry={{primitive: 'box'}}
+                material={{color: 'red'}}
+                position={{x: 0, y: 0, z: 0}}
+                />
         </Scene>
     )
 }
