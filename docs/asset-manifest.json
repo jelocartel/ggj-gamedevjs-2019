@@ -1,13 +1,13 @@
 {
-  "main.css": "/static/css/main.37a62132.chunk.css",
-  "main.js": "/static/js/main.a3bbb461.chunk.js",
-  "main.js.map": "/static/js/main.a3bbb461.chunk.js.map",
-  "static/js/1.3b7ac65c.chunk.js": "/static/js/1.3b7ac65c.chunk.js",
-  "static/js/1.3b7ac65c.chunk.js.map": "/static/js/1.3b7ac65c.chunk.js.map",
-  "runtime~main.js": "/static/js/runtime~main.229c360f.js",
-  "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
-  "static/css/main.37a62132.chunk.css.map": "/static/css/main.37a62132.chunk.css.map",
-  "index.html": "/index.html",
-  "precache-manifest.8ca8520fd9cf8de29363fb910add061b.js": "/precache-manifest.8ca8520fd9cf8de29363fb910add061b.js",
-  "service-worker.js": "/service-worker.js"
+  "main.css": "/ggj-gamedevjs-2019/static/css/main.c8cedb6c.chunk.css",
+  "main.js": "/ggj-gamedevjs-2019/static/js/main.42a06a51.chunk.js",
+  "main.js.map": "/ggj-gamedevjs-2019/static/js/main.42a06a51.chunk.js.map",
+  "static/js/1.3b7ac65c.chunk.js": "/ggj-gamedevjs-2019/static/js/1.3b7ac65c.chunk.js",
+  "static/js/1.3b7ac65c.chunk.js.map": "/ggj-gamedevjs-2019/static/js/1.3b7ac65c.chunk.js.map",
+  "runtime~main.js": "/ggj-gamedevjs-2019/static/js/runtime~main.040c98eb.js",
+  "runtime~main.js.map": "/ggj-gamedevjs-2019/static/js/runtime~main.040c98eb.js.map",
+  "static/css/main.c8cedb6c.chunk.css.map": "/ggj-gamedevjs-2019/static/css/main.c8cedb6c.chunk.css.map",
+  "index.html": "/ggj-gamedevjs-2019/index.html",
+  "precache-manifest.26ac9b216d816f478f41b58cefc7b0cd.js": "/ggj-gamedevjs-2019/precache-manifest.26ac9b216d816f478f41b58cefc7b0cd.js",
+  "service-worker.js": "/ggj-gamedevjs-2019/service-worker.js"
 }
