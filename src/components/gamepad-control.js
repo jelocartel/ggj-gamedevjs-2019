@@ -148,7 +148,7 @@ AFRAME.registerComponent('gamepad-controls',
             let vel = Math.abs(velocity[rollAxis]);
             let maxVelocity = data.acceleration / data.easing;
             let velFactor = scale(vel, 0, maxVelocity, 1.2, 0.9);
-            if (velFactor > 1.1) velFactor = 0;
+            if (velFactor > 1.16) velFactor = 0;
             this.el.object3D.rotation.y -= inputX * velFactor * data.turnSpeed * delta;
         }
     }
