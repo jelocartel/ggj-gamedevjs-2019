@@ -1,4 +1,7 @@
 /* global THREE */
+
+import {scale} from "../util";
+
 var GamepadButton = Object.assign(function GamepadButton () {}, {
 	FACE_1: 0,
 	FACE_2: 1,
@@ -142,10 +145,10 @@ AFRAME.registerComponent('gamepad-controls',
         velocity[rollAxis] += B * acceleration * delta;
 
         if (Math.abs(inputX) > JOYSTICK_EPS) {
+            let vel = Math.abs(velocity[rollAxis]);
             let maxVelocity = data.acceleration / data.easing;
-            // Scale velocity linearly to [0,1]. The slower the object moves, the
-            // slower it will turn.
-            let velFactor = Math.abs(velocity[rollAxis] / maxVelocity);
+            let velFactor = scale(vel, 0, maxVelocity, 1.2, 0.9);
+            if (velFactor > 1.1) velFactor = 0;
             this.el.object3D.rotation.y -= inputX * velFactor * data.turnSpeed * delta;
         }
     }
