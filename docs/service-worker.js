@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/ggj-gamedevjs-2019/precache-manifest.26ac9b216d816f478f41b58cefc7b0cd.js"
+  "https://jelocartel.github.io/ggj-gamedevjs-2019/precache-manifest.af0cd89c3327fab0e0653732a281efa5.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/ggj-gamedevjs-2019/index.html", {
+workbox.routing.registerNavigationRoute("https://jelocartel.github.io/ggj-gamedevjs-2019/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
