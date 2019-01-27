@@ -167,6 +167,7 @@ AFRAME.registerComponent('gamepad-controls',
       var rotation = this.el.getAttribute('rotation');
       var velocity = this.velocity;
       var xRotation;
+      this.el.setAttribute('velocity',this.velocity[this.data.rollAxis]);
 
       directionVector.copy(velocity);
       directionVector.multiplyScalar(delta);

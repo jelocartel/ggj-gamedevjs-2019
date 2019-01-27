@@ -5,6 +5,7 @@ import { Camera } from "../entities/camera";
 import CameraMovement from '../components/camera-movement';
 import "../components/gamepad-control";
 import "../components/keyboard-controls";
+import "../components/car-audio";
 import 'aframe-aabb-collider-component';
 
 import './pages.css';
@@ -41,8 +42,9 @@ const page3 = ( props ) => {
                     gltf-model={`#model-car1${player}`}
                     keyboard-controls={CAR1_DRIVING_MODEL}
                     position={{x: 0 + index*4, y: 0, z: 0}}
-                    events={{ hitstart: checkCollision }}
-                    gamepad-controls={{controller: index, lookEnabled: false, ...CAR1_DRIVING_MODEL}}/>
+                    gamepad-controls={{controller: index, lookEnabled: false, ...CAR1_DRIVING_MODEL}}
+                    car-audio
+                    events={{hitstart: checkCollision}} />;
             })}
 
             <Entity
