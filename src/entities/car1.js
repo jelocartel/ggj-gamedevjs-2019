@@ -27,6 +27,6 @@ function Car1({index, player}) {
         keyboard-controls={CAR1_DRIVING_MODEL}
         position={{x: 0 + index*4, y: 0, z: 0}}
         gamepad-controls={{controller: index, lookEnabled: false, ...CAR1_DRIVING_MODEL}}
-        car-audio
+        car-audio={{sound: 'sounds/car' + (index + 1) + '.mp3'}}
         events={{hitstart: checkCollision}} />;
 }
