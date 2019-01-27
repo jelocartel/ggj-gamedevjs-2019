@@ -2,24 +2,12 @@ import React from 'react';
 import AFRAME from "aframe";
 import {Scene, Entity} from "aframe-react";
 import { Camera } from "../entities/camera";
+import Car1 from "../entities/car1";
+
 import CameraMovement from '../components/camera-movement';
-import "../components/gamepad-control";
-import "../components/keyboard-controls";
-import "../components/car-audio";
 import 'aframe-aabb-collider-component';
 
 import './pages.css';
-
-const CAR1_DRIVING_MODEL = {
-    acceleration: 100,
-    easing: 3,
-    turnSpeed: Math.PI,
-};
-
-const checkCollision = (evt) => {
-    console.log('collision, ', evt)
-    //evt.target is car !!
-}
 
 const page3 = ( props ) => {
     AFRAME.registerComponent('camera-movement', CameraMovement);
@@ -38,18 +26,9 @@ const page3 = ( props ) => {
                 gltf-model="#model-map1"
                 position={{x: 0, y: 0, z: 0}}/>
                 
-            {props.players.map( (player, index) => {
-                return <Entity
-                    class="car"
-                    aabb-collider="objects: .toCheckCollisions"
-                    key={index}
-                    gltf-model={`#model-car1${player}`}
-                    keyboard-controls={CAR1_DRIVING_MODEL}
-                    position={{x: 0 + index*4, y: 0, z: 0}}
-                    gamepad-controls={{controller: index, lookEnabled: false, ...CAR1_DRIVING_MODEL}}
-                    car-audio
-                    events={{hitstart: checkCollision}} />;
-            })}
+            {props.players.map( (player, index) =>
+                <Car1 key={index} index={index} player={player}/>
+            )}
 
             <Entity
                 class="toCheckCollisions"
