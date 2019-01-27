@@ -66,8 +66,9 @@ const page3 = ( props ) => {
                     width:"10",
                     depth:"1"
                 }}
-                material={{color: 'red'}}
-                position={{x: 0, y: -0.1, z: 0}}
+                material={{visible: false}}
+                position={{x: 2.1, y: 0, z: 0.3}}
+                scale={{x: 2.1, y: 1, z: 1}}
                 id='waypoint_1'
             
                 />
@@ -79,8 +80,10 @@ const page3 = ( props ) => {
                     width:"10",
                     depth:"1"
                 }}
-                material={{color: 'blue'}}
-                position={{x: 20, y: -0.1, z: -30}}
+                material={{visible: false}}
+                position={{x: 18, y: 0, z: -36}}
+                rotation={{x: 90, y:90, z:0}}
+                scale={{x: 2.2, y:1, z:1}}
                 id='waypoint_2'
                 />
             <Entity
@@ -91,8 +94,9 @@ const page3 = ( props ) => {
                     width:"10",
                     depth:"1"
                 }}
-                material={{color: 'green'}}
-                position={{x: -50, y: -0.1, z: -30}}
+                material={{visible: false}}
+                position={{x: -50, y: 0, z: -30}}
+                scale={{x: 3.6, y:1, z:1}}
                 id='waypoint_3'
                 />    
         </Scene>

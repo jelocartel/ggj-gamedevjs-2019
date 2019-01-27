@@ -5,7 +5,7 @@
 }
 
 .page {
-    background-color: #4545ff;
+    background-color: #ccc;
     margin-top: 30%;
     text-align: center;
     padding: 20px 0 2px 0;
@@ -15,18 +15,18 @@
 h1 {
     text-align: center;
     /* margin: 40px; */
-    color: #d4163c;
+    color: #000;
     position: absolute;
     top: 22%;
     /* left: 20%; */
     font-size: 66px;
-    font-family: 'Indie Flower';
+    font-family: 'Times New Roman';
     width: 100%;
 }
 
 button {
     margin: auto;
-    background-color: #1ea241;
+    background-color: #ccc;
     color: #ffffff;
     display: block;
     position: absolute;
@@ -37,12 +37,12 @@ button {
     padding: 10px;
     font-size: 24px;
     line-height: 30px;
-    border: none;
-    border-radius: 9px;
+    border: outset;
+    /* border-radius: 9px; */
 }
 
 button:hover {
-    background-color: #038a03;
+    background-color: #7e7e7e;
 }
 
 p {
