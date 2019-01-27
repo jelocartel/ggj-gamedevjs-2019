@@ -5,7 +5,7 @@ import { Camera } from "../entities/camera";
 import Car1 from "../entities/car1";
 import Map1 from "../entities/map1";
 
-// import CameraMovement from '../components/camera-movement';
+import '../components/camera-movement';
 import 'aframe-aabb-collider-component';
 
 import './pages.css';
