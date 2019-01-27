@@ -2,9 +2,12 @@
 
 module.exports = {
     tick() {
+        const ratio = window.innerWidth / window.innerHeight;
         const cars = document.querySelectorAll('.car');
-        const offset = 10;
+        const offset = 1;
         const camera = this.el.children[0].object3D.children[0];
+        camera.aspect = ratio;
+
         // console.log(camera);
         // return;
         const boundingBox = new THREE.Box3();
@@ -14,27 +17,32 @@ module.exports = {
             group.add(car.object3D.clone());
         });
 
-        // get bounding box of object - this will be used to setup controls and camera
         boundingBox.setFromObject(group);
 
         const center = boundingBox.getCenter();
+        // console.log
         const size = boundingBox.getSize();
 
-        // get the max side of the bounding box (fits to width OR height as needed )
         const maxDim = Math.max(size.x, size.y, size.z);
         const fov = camera.fov * (Math.PI / 180);
-        let cameraZ = Math.abs(maxDim / 4 * Math.tan(fov * 2));
+        let cameraZ = (maxDim / 2 / ratio) / Math.tan(fov / 2);
 
-        cameraZ *= offset; // zoom out a little so that objects don't fill the screen
-
+        cameraZ *= offset;
         camera.position.z = cameraZ;
+        camera.position.x = center.x;
+        // camera.position.y = center.y;
+        console.log(center, camera.rotation);
+        // camera.position.z = center.z;
+        // camera.position.x = center.x;
+        // console.log(camera.position);
+        // const minZ = boundingBox.min.z;
+        // const cameraToFarEdge = (minZ < 0) ? -minZ + cameraZ : cameraZ - minZ;
 
-        const minZ = boundingBox.min.z;
-        const cameraToFarEdge = (minZ < 0) ? -minZ + cameraZ : cameraZ - minZ;
-
-        camera.far = cameraToFarEdge * 3;
+        // camera.far = cameraToFarEdge * 3;
         camera.updateProjectionMatrix();
-        camera.lookAt(center)
+        camera.lookAt(center);
+        // camera.lookAt(cars[0].object3D.position);
+
 
     }
 }
