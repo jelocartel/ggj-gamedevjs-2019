@@ -30,10 +30,14 @@ const page3 = ( props ) => {
                 <a-asset-item id="model-car1cyan" src="./car1cyan.glb"></a-asset-item>
                 <a-asset-item id="model-car1magenta" src="./car1magenta.glb"></a-asset-item>
                 <a-asset-item id="model-car1yellow" src="./car1yellow.glb"></a-asset-item>
-                <a-asset-item id="model-map1" src="./map1.glb"></a-asset-item>
+                <a-asset-item id="model-map1" src="./map2.glb"></a-asset-item>
             </a-assets>
             <Camera></Camera>
 
+            <Entity
+                gltf-model="#model-map1"
+                position={{x: 0, y: 0, z: 0}}/>
+                
             {props.players.map( (player, index) => {
                 return <Entity
                     class="car"
