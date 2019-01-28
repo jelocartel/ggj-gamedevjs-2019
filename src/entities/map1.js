@@ -20,6 +20,12 @@ function Map1() {
             position={{x: 0, y: 0, z: 0}}
         />
 
+        <Entity
+            gltf-model="#model-pencil"
+            static-body
+            position={{x: 10, y: 0, z: 0}}
+        />
+
     </Entity>;
 
 }
