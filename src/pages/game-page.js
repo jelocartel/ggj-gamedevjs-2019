@@ -5,14 +5,44 @@ import { Camera } from "../entities/camera";
 import Car1 from "../entities/car1";
 import Map1 from "../entities/map1";
 
-import CameraMovement from '../components/camera-movement';
+import '../components/camera-movement';
 import 'aframe-aabb-collider-component';
 import 'aframe-physics-system';
 
 import './pages.css';
 
 const page3 = ( props ) => {
-    AFRAME.registerComponent('camera-movement', CameraMovement);
+    // AFRAME.registerComponent('camera-movement', CameraMovement);
+
+    const carsWaypoints = {}
+    props.players.forEach((element, index) => {
+        carsWaypoints[index] = [];
+    });
+    
+    let playersPoints = []
+    props.players.forEach((element, index) => {
+        playersPoints[index] = 0;
+    });
+
+    const checkCompletionTrackHandler = (waypoint, car) => {
+        const waypointsChecked = carsWaypoints[car];
+        if (waypoint === '1') {
+            if (waypointsChecked.length === 3) {
+                console.log(' full track !!!')
+                playersPoints[car] = playersPoints[car] + 1
+            }
+            waypointsChecked.length = 0;
+            waypointsChecked[0] = '1';
+            carsWaypoints[car] = waypointsChecked;
+        } 
+        if (!waypointsChecked.includes(waypoint)) {
+            waypointsChecked.push(waypoint);
+            carsWaypoints[car] = waypointsChecked;
+        }
+        //handler to app to store points
+        props.setResults(playersPoints);
+    }
+
     return (
         <Scene physics="debug: true; friction: 0.1">
             <a-assets>
@@ -27,8 +57,50 @@ const page3 = ( props ) => {
             <Map1/>
                 
             {props.players.map( (player, index) =>
-                <Car1 key={index} index={index} player={player}/>
+                <Car1 key={index} index={index} player={player} checkWaypoint={checkCompletionTrackHandler}/>
             )}
+
+            <Entity
+                class="waypoint"
+                geometry={{
+                    primitive: 'box',
+                    height:"1",
+                    width:"10",
+                    depth:"1"
+                }}
+                material={{visible: false}}
+                position={{x: 2.1, y: 0, z: 0.3}}
+                scale={{x: 2.1, y: 1, z: 1}}
+                id='waypoint_1'
+            
+                />
+            <Entity
+                class="waypoint"
+                geometry={{
+                    primitive: 'box',
+                    height:"1",
+                    width:"10",
+                    depth:"1"
+                }}
+                material={{visible: false}}
+                position={{x: 18, y: 0, z: -36}}
+                rotation={{x: 90, y:90, z:0}}
+                scale={{x: 2.2, y:1, z:1}}
+                id='waypoint_2'
+                />
+            <Entity
+                class="waypoint"
+                geometry={{
+                    primitive: 'box',
+                    height:"1",
+                    width:"10",
+                    depth:"1"
+                }}
+                material={{visible: false}}
+                position={{x: -50, y: 0, z: -30}}
+                scale={{x: 3.6, y:1, z:1}}
+                id='waypoint_3'
+                />    
         </Scene>
     )
 }
