@@ -16,7 +16,7 @@ const page3 = ( props ) => {
 
     const carsWaypoints = {}
     props.players.forEach((element, index) => {
-        carsWaypoints[index] = [];
+        carsWaypoints[`car${index}`] = [];
     });
     
     let playersPoints = []
@@ -61,7 +61,7 @@ const page3 = ( props ) => {
             )}
 
             <Entity
-                class="waypoint"
+                className="waypoint"
                 geometry={{
                     primitive: 'box',
                     height:"1",
@@ -75,7 +75,7 @@ const page3 = ( props ) => {
             
                 />
             <Entity
-                class="waypoint"
+                className="waypoint"
                 geometry={{
                     primitive: 'box',
                     height:"1",
@@ -89,7 +89,7 @@ const page3 = ( props ) => {
                 id='waypoint_2'
                 />
             <Entity
-                class="waypoint"
+                className="waypoint"
                 geometry={{
                     primitive: 'box',
                     height:"1",

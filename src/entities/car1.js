@@ -23,7 +23,7 @@ function Car1({index, player, checkWaypoint}) {
 
     return <Entity
         id={`car${index}`}
-        class="car"
+        className="car"
         aabb-collider="objects: .waypoint"
         dynamic-body={{
             shape: "box",
@@ -38,5 +38,5 @@ function Car1({index, player, checkWaypoint}) {
         gamepad-controls={{controller: index, lookEnabled: false, ...CAR1_DRIVING_MODEL}}
         car-audio={{sound: 'sounds/car' + (index + 1) + '.mp3'}}
         events={{hitclosest: checkCollision}}
-        id={index} />;
+        />;
 }

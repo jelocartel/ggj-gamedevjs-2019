@@ -64,7 +64,7 @@ class App extends Component {
         } else if (this.state.activePage === 3) {
             return (
                 <div>
-                    <div ref={this.myRef} class="highscore">
+                    <div ref={this.myRef} className="highscore">
                         {new Array(this.state.playersCars.length).fill('1').map( (el, index) => {
                             return (
                                 <p key={index}>player {index}</p>
